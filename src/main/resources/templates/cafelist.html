@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카페 메뉴</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .cafe-list, .menu-list {
+            margin-top: 20px;
+        }
+
+        .cafe-item {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cafe-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .menu-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .menu-list li:last-child {
+            border-bottom: none;
+        }
+
+        .menu-list li:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>카페 목록</h1>
+
+    <!-- 카페 리스트 -->
+    <div class="cafe-list">
+        <div th:each="cafe : ${cafes}" class="cafe-item" th:data-id="${cafe.idx}"
+             th:onclick="window.location.href='/menu?cafeId=' + ${cafe.idx}">
+            <strong th:text="${cafe.storeName}">카페 이름</strong>
+        </div>
+    </div>
+
+    <hr/>
+
+    <h1>메뉴 리스트</h1>
+
+    <!-- 메뉴 리스트 -->
+    <div class="menu-list" th:if="${menus}">
+        <ul>
+            <li th:each="menu : ${menus}" th:text="${menu.menuName}">메뉴 이름</li>
+        </ul>
+    </div>
+
+    <div class="menu-list" th:if="${#lists.isEmpty(menus)}">
+        <p style="text-align: center; color: #777;">등록된 메뉴가 없습니다.</p>
+    </div>
+</div>
+
+</body>
+</html>
