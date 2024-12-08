@@ -13,4 +13,5 @@ public class MenuDTO {
     private long idx;
     private String menuName;
     private int price;
+    private int quantity;
 }

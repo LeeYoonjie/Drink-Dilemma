@@ -19,14 +19,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addToCart(Menu menu, int quantity) {
-        Cart cartItem = cartRepository.findByMenu(menu).orElse(null);
+        Cart cartItem = cartRepository.findByMenuIdx(menu.getIdx()).orElse(null);
         if (cartItem != null) {
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
         } else {
             cartItem = Cart.builder()
                     .menu(menu)
-                    .menuName(menu.getMenuName()) // 메뉴 이름 설정
-                    .price(menu.getPrice())       // 가격 설정
+                    .menuName(menu.getMenuName())
+                    .price(menu.getPrice())
                     .quantity(quantity)
                     .build();
         }
@@ -40,9 +40,28 @@ public class CartServiceImpl implements CartService {
                         .menuId(cart.getMenu().getIdx())
                         .menuName(cart.getMenu().getMenuName())
                         .quantity(cart.getQuantity())
-                        .price(cart.getMenu().getPrice()) // int 그대로 사용
+                        .price(cart.getMenu().getPrice())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getMenuQuantity(Long menuId) {
+        Optional<Cart> cartItem = cartRepository.findByMenuIdx(menuId);
+        return cartItem.map(Cart::getQuantity).orElse(0); // 없으면 0 반환
+    }
+
+    @Override
+    public void deleteFromCart(Long menuId) {
+        Optional<Cart> cartItem = cartRepository.findByMenuIdx(menuId);
+        cartItem.ifPresent(cart -> {
+            if (cart.getQuantity() > 1) {
+                cart.setQuantity(cart.getQuantity() - 1);
+                cartRepository.save(cart);
+            } else {
+                cartRepository.delete(cart);
+            }
+        });
     }
 
     @Override
