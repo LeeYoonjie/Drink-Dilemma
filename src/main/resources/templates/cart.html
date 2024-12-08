@@ -88,6 +88,14 @@
     .button-container button:hover {
       background-color: #c82333;
     }
+
+    .button-container .reset-button {
+      background-color: #007bff;
+    }
+
+    .button-container .reset-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -120,8 +128,10 @@
   </table>
 
   <div class="button-container">
-    <form action="/cart/clear" method="post">
-      <button type="submit">장바구니 비우기</button>
+
+    <!-- 처음으로 돌아가기 -->
+    <form action="/cart/reset" method="post" style="display: inline;">
+      <button type="submit" class="reset-button">처음으로 돌아가기</button>
     </form>
   </div>
 </div>

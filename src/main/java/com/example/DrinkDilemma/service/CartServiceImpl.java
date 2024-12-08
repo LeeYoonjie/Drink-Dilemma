@@ -66,6 +66,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void clearCart() {
-        cartRepository.deleteAll();
+        cartRepository.deleteAll(); // 모든 장바구니 데이터 삭제
     }
 }
