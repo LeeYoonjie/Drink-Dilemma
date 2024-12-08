@@ -11,14 +11,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Menu {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idx;
+    private Long idx;
 
+    @Column(name = "menu_name", nullable = false)
     private String menuName;
-    private String price;
+
+    @Column(nullable = false)
+    private int price;
 
     @ManyToOne
-    @JoinColumn(name = "cafe_id")
+    @JoinColumn(name = "cafe_id", nullable = false)
     private Cafe cafe;
 }

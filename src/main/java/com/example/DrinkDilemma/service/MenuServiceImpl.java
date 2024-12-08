@@ -1,6 +1,5 @@
 package com.example.DrinkDilemma.service;
 
-import com.example.DrinkDilemma.Utils;
 import com.example.DrinkDilemma.domain.Cafe;
 import com.example.DrinkDilemma.domain.Menu;
 import com.example.DrinkDilemma.dto.MenuDTO;
@@ -9,21 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MenuServiceImpl implements MenuService {
+
     @Autowired
     private MenuRepository menuRepository;
 
     @Override
-    public void saveMenu(String menuName, String price, Cafe cafe) {
+    public void saveMenu(String menuName, int price, Cafe cafe) { // int로 설정
         Menu menu = Menu.builder()
                 .menuName(menuName)
-                .price(price)
+                .price(price) // int로 처리
                 .cafe(cafe)
                 .build();
         menuRepository.save(menu);
+    }
+
+    @Override
+    public void saveMenu(String menuName, String price, Cafe cafe) {
+
     }
 
     @Override
@@ -32,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
                 .map(menu -> MenuDTO.builder()
                         .idx(menu.getIdx())
                         .menuName(menu.getMenuName())
-                        .price(menu.getPrice())
+                        .price(menu.getPrice()) // int로 처리
                         .build())
                 .toList();
     }
@@ -42,5 +46,4 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.findById(menuId)
                 .orElseThrow(() -> new RuntimeException("Menu not found with ID: " + menuId));
     }
-
 }

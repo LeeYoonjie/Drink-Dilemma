@@ -7,6 +7,8 @@ import com.example.DrinkDilemma.dto.MenuDTO;
 import java.util.List;
 
 public interface MenuService {
+    void saveMenu(String menuName, int price, Cafe cafe);
+
     void saveMenu(String menuName, String price, Cafe cafe);
 
     List<MenuDTO> findByCafeId(long cafeId);

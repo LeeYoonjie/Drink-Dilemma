@@ -152,7 +152,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="cafe : ${cafes}">
-                    <td th:text="${cafe.storeName}">가게명</td>
+                    <td>
+                        <a th:href="@{/menu/cafe/{id}(id=${cafe.idx})}" th:text="${cafe.storeName}">가게명</a>
+                    </td>
+
                 </tr>
                 </tbody>
             </table>

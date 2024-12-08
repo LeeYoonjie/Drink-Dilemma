@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>카페 메뉴</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .menu-name {
+            font-weight: bold;
+            font-size: 16px;
+            flex: 2;
+        }
+
+        .price {
+            font-size: 14px;
+            color: #666;
+            text-align: right;
+            flex: 1;
+        }
+
+        li:hover .price {
+            color: #ffffff;
+        }
+
+        .cart-button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cart-navigation-button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-navigation-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>메뉴 리스트</h1>
+    <ul>
+        <li th:each="menu : ${menus}">
+            <span class="menu-name" th:text="${menu.menuName}">메뉴 이름</span>
+            <span class="price" th:text="${menu.price} + ' 원'">가격</span>
+            <!-- 장바구니 추가 버튼 -->
+            <form action="/cart/add" method="post" style="display: inline;">
+                <input type="hidden" name="menuId" th:value="${menu.idx}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="cart-button">➕ 추가</button>
+            </form>
+        </li>
+    </ul>
+    <div class="cart-button-container">
+        <a th:href="@{/cart/view}">
+            <button class="cart-navigation-button">장바구니로 이동</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>

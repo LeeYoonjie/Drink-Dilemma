@@ -6,18 +6,28 @@ import lombok.*;
 @Entity
 @Table(name = "cart")
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Cart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "menu_id")
+    @JoinColumn(name = "menu_id", nullable = false)
     private Menu menu;
 
-    private int quantity; // 메뉴 수량
+    @Column(name = "menu_name", nullable = false)
+    private String menuName; // 메뉴 이름 필드 추가
+
+    @Column(nullable = false)
+    private int price; // 가격 필드 추가
+
+    private int quantity;
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
